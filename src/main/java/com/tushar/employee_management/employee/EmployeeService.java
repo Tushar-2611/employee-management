@@ -23,12 +23,6 @@ public class EmployeeService {
     }
 
     public Employee createEmployee(Employee employee) {
-
-        if (employee.getName().isBlank()) {
-            throw new EmployeeValidationException(
-                    "Name cannot be empty");
-        }
-
         return employeeRepository.save(employee);
     }
 
@@ -38,10 +32,6 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(
                         "Employee not found"));
-        if (employee.getName().isBlank()) {
-            throw new EmployeeValidationException(
-                    "Name cannot be empty");
-        }
         employee.setName(updatedEmployee.getName());
         employee.setDepartment(
                 updatedEmployee.getDepartment());
