@@ -13,58 +13,44 @@ import java.util.List;
 @RestController
 public class EmployeeController {
 
+    private final EmployeeService employeeService;
     private final EmployeeRepository employeeRepository;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
+    public EmployeeController(
+            EmployeeService employeeService, EmployeeRepository employeeRepository) {
+        this.employeeService = employeeService;
         this.employeeRepository = employeeRepository;
     }
 
     @GetMapping("/employees")
     public List<Employee> getEmployees() {
-        return employeeRepository.findAll();
+        return employeeService.getAllEmployees();
     }
 
     @PostMapping("/employees")
     public Employee createEmployee(
             @RequestBody Employee employee) {
-        return employeeRepository.save(employee);
+        return employeeService.createEmployee(employee);
     }
 
     @GetMapping("/employees/{id}")
     public Employee getEmployeeById(
             @PathVariable Long id) {
-
-        return employeeRepository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException(
-                        "Employee not found"));
+        return employeeService.getEmployeeById(id);
     }
 
     @DeleteMapping("/employees/{id}")
     public String deleteEmployee(
             @PathVariable Long id) {
 
-        Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException(
-                        "Employee not found"));
+        return employeeService.deleteEmployee(id);
 
-        employeeRepository.delete(employee);
-
-        return "Employee deleted successfully";
     }
 
     @PutMapping("/employees/{id}")
     public Employee updateEmployee(
             @PathVariable Long id,
-            @RequestBody Employee updatedEmployee) {
-
-        Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException(
-                        "Employee not found"));
-
-        employee.setName(updatedEmployee.getName());
-        employee.setDepartment(
-                updatedEmployee.getDepartment());
-
-        return employeeRepository.save(employee);
+            @RequestBody Employee employee) {
+        return employeeService.updateEmployee(id, employee);
     }
 }

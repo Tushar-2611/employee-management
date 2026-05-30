@@ -19,4 +19,14 @@ public class GlobalExceptionHandler {
                 "message",
                 ex.getMessage());
     }
+
+    @ExceptionHandler(EmployeeValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleEmployeeValidation(
+            EmployeeValidationException ex) {
+
+        return Map.of(
+                "message",
+                ex.getMessage());
+    }
 }
