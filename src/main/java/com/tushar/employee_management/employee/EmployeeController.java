@@ -2,6 +2,7 @@ package com.tushar.employee_management.employee;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +15,10 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-    private final EmployeeRepository employeeRepository;
 
     public EmployeeController(
-            EmployeeService employeeService, EmployeeRepository employeeRepository) {
+            EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.employeeRepository = employeeRepository;
     }
 
     @GetMapping("/employees")
@@ -29,7 +28,7 @@ public class EmployeeController {
 
     @PostMapping("/employees")
     public Employee createEmployee(
-            @RequestBody Employee employee) {
+            @Valid @RequestBody Employee employee) {
         return employeeService.createEmployee(employee);
     }
 
@@ -50,7 +49,7 @@ public class EmployeeController {
     @PutMapping("/employees/{id}")
     public Employee updateEmployee(
             @PathVariable Long id,
-            @RequestBody Employee employee) {
+            @Valid @RequestBody Employee employee) {
         return employeeService.updateEmployee(id, employee);
     }
 }
