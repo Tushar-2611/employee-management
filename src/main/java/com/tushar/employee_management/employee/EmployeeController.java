@@ -14,12 +14,10 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-    private final EmployeeRepository employeeRepository;
 
     public EmployeeController(
-            EmployeeService employeeService, EmployeeRepository employeeRepository) {
+            EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.employeeRepository = employeeRepository;
     }
 
     @GetMapping("/employees")
