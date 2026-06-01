@@ -2,6 +2,10 @@ package com.tushar.employee_management.employee;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.tushar.employee_management.dto.EmployeeRequestDTO;
+import com.tushar.employee_management.dto.EmployeeResponseDTO;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,14 +26,15 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees")
-    public List<Employee> getEmployees() {
+    public List<EmployeeResponseDTO> getEmployees() {
         return employeeService.getAllEmployees();
     }
 
     @PostMapping("/employees")
-    public Employee createEmployee(
-            @Valid @RequestBody Employee employee) {
-        return employeeService.createEmployee(employee);
+    public EmployeeResponseDTO createEmployee(
+            @Valid @RequestBody EmployeeRequestDTO request) {
+
+        return employeeService.createEmployee(request);
     }
 
     @GetMapping("/employees/{id}")

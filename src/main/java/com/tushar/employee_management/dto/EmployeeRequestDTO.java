@@ -1,8 +1,13 @@
 package com.tushar.employee_management.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class EmployeeRequestDTO {
 
+    @NotBlank(message = "Employee name cannot be blank")
     private String name;
+
+    @NotBlank(message = "Department cannot be blank")
     private String department;
 
     public String getName() {
