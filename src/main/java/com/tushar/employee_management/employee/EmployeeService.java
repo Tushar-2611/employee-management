@@ -34,10 +34,16 @@ public class EmployeeService {
         return responseList;
     }
 
-    public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id)
+    public EmployeeResponseDTO getEmployeeById(Long id) {
+        Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(
                         "Employee not found"));
+        EmployeeResponseDTO response = new EmployeeResponseDTO();
+        response.setId(employee.getId());
+        response.setName(employee.getName());
+        response.setDepartment(employee.getDepartment());
+        return response;
+
     }
 
     public EmployeeResponseDTO createEmployee(
