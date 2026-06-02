@@ -2,7 +2,10 @@ package com.tushar.employee_management.employee;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import jakarta.validation.Valid;
+
+import com.tushar.employee_management.dto.EmployeeRequestDTO;
+import com.tushar.employee_management.dto.EmployeeResponseDTO;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
+import jakarta.validation.Valid;
 
 @RestController
 public class EmployeeController {
@@ -22,18 +26,19 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees")
-    public List<Employee> getEmployees() {
+    public List<EmployeeResponseDTO> getEmployees() {
         return employeeService.getAllEmployees();
     }
 
     @PostMapping("/employees")
-    public Employee createEmployee(
-            @Valid @RequestBody Employee employee) {
-        return employeeService.createEmployee(employee);
+    public EmployeeResponseDTO createEmployee(
+            @Valid @RequestBody EmployeeRequestDTO request) {
+
+        return employeeService.createEmployee(request);
     }
 
     @GetMapping("/employees/{id}")
-    public Employee getEmployeeById(
+    public EmployeeResponseDTO getEmployeeById(
             @PathVariable Long id) {
         return employeeService.getEmployeeById(id);
     }
