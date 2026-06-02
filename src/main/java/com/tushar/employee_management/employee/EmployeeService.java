@@ -65,17 +65,23 @@ public class EmployeeService {
         return response;
     }
 
-    public Employee updateEmployee(
+    public EmployeeResponseDTO updateEmployee(
             Long id,
-            Employee updatedEmployee) {
+            EmployeeRequestDTO request) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(
                         "Employee not found"));
-        employee.setName(updatedEmployee.getName());
+        employee.setName(request.getName());
         employee.setDepartment(
-                updatedEmployee.getDepartment());
+                request.getDepartment());
+        employee = employeeRepository.save(employee);
+        EmployeeResponseDTO response = new EmployeeResponseDTO();
 
-        return employeeRepository.save(employee);
+        response.setId(employee.getId());
+        response.setName(employee.getName());
+        response.setDepartment(employee.getDepartment());
+
+        return response;
     }
 
     public String deleteEmployee(
